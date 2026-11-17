@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -7,9 +8,12 @@
   <!-- Tipografías elegantes para estética poética y romántica -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500&display=swap"
+    rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
   <!-- Elementos de audio: carga cancion.mp3 y respalda automáticamente con el archivo original de la carpeta -->
   <audio id="bg-music" preload="auto">
@@ -203,27 +207,23 @@
   <!-- Reproductor oculto como icono en la esquina inferior izquierda (se despliega al tocarlo) -->
   <footer class="player-dock" id="player-dock">
     <!-- Botón icono fijo en la esquina inferior izquierda -->
-    <button
-      id="btn-toggle-dock"
-      class="dock-launcher-btn"
-      type="button"
-      title="Mostrar / ocultar barra de música"
-      aria-expanded="false"
-      aria-controls="dock-panel"
-    >
+    <button id="btn-toggle-dock" class="dock-launcher-btn" type="button" title="Mostrar / ocultar barra de música"
+      aria-expanded="false" aria-controls="dock-panel">
       <span class="launcher-icon" id="launcher-icon">♫</span>
       <span class="launcher-ring"></span>
     </button>
 
     <!-- Panel desplegable con la barra de adelantar música y controles -->
     <div class="dock-panel" id="dock-panel">
-      <button id="btn-play-pause" class="dock-btn" type="button" title="Pausar / Reproducir" aria-label="Pausar o Reproducir">
+      <button id="btn-play-pause" class="dock-btn" type="button" title="Pausar / Reproducir"
+        aria-label="Pausar o Reproducir">
         <span id="play-icon">❚❚</span>
       </button>
 
       <div class="timeline-container">
         <span class="time-label" id="time-current">0:00</span>
-        <div class="progress-track" id="progress-track" role="slider" aria-label="Adelantar o retroceder canción" tabindex="0">
+        <div class="progress-track" id="progress-track" role="slider" aria-label="Adelantar o retroceder canción"
+          tabindex="0">
           <div class="progress-fill" id="progress-fill"></div>
           <div class="progress-thumb" id="progress-thumb"></div>
         </div>
@@ -231,9 +231,12 @@
       </div>
 
       <div class="dock-actions">
-        <button id="btn-sync-minus" class="dock-btn dock-btn-sm" type="button" title="Adelantar letra (-0.3s)">-0.3s</button>
-        <button id="btn-sync-plus" class="dock-btn dock-btn-sm" type="button" title="Retrasar letra (+0.3s)">+0.3s</button>
-        <button id="btn-rebloom" class="dock-btn dock-btn-sm" type="button" title="Volver a animar el crecimiento de los lirios">✿ Florecer</button>
+        <button id="btn-sync-minus" class="dock-btn dock-btn-sm" type="button"
+          title="Adelantar letra (-0.3s)">-0.3s</button>
+        <button id="btn-sync-plus" class="dock-btn dock-btn-sm" type="button"
+          title="Retrasar letra (+0.3s)">+0.3s</button>
+        <button id="btn-rebloom" class="dock-btn dock-btn-sm" type="button"
+          title="Volver a animar el crecimiento de los lirios">✿ Florecer</button>
       </div>
     </div>
   </footer>
@@ -253,15 +256,17 @@
         </svg>
       </div>
 
-      <p class="intro-subtitle">Una experiencia interactiva para ti</p>
-      <h1 class="intro-title">Donde Florecen los Lirios</h1>
+      <p class="intro-subtitle">Un jardin solo para ti</p>
+      <h1 class="intro-title">Tu Jardin de Lirios</h1>
       <p class="intro-description">
-        Desde la noche estrellada hasta el amanecer, cada lirio crecerá lentamente desde la tierra y abrirá sus pétalos al compás de nuestra canción.
+        Te hice un pequeño detalle para recordarte lo especial que eres y lo mucho que me importas,
+        espero que te guste.
       </p>
 
       <div class="intro-song-detected">
         <span class="detected-label">Canción lista en el jardín</span>
-        <strong class="detected-name" id="intro-song-name">Romeroflacko — G-LOVE ft. El Mesías &amp; The B Brothers</strong>
+        <strong class="detected-name" id="intro-song-name">Romeroflacko — G-LOVE ft. El Mesías &amp; The B
+          Brothers</strong>
       </div>
 
       <button id="btn-start" class="btn-start" type="button">
@@ -284,4 +289,5 @@
 
   <script src="script.js"></script>
 </body>
+
 </html>
