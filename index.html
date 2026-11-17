@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Jardín de Lirios — Experiencia Romántica</title>
+  <!-- Tipografías elegantes para estética poética y romántica -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Elementos de audio: carga cancion.mp3 y respalda automáticamente con el archivo original de la carpeta -->
+  <audio id="bg-music" preload="auto">
+    <source src="cancion.mp3" type="audio/mpeg" />
+    <source src="Romeroflacko - G-LOVE ft.EL MESIAS y The B Brothers (LIRICS).mp3" type="audio/mpeg" />
+  </audio>
+
+  <!-- Fondo escénico dinámico: evoluciona de Noche Estrellada -> Amanecer Rosado -> Día Soleado -->
+  <div id="sky-backdrop" class="sky-backdrop">
+    <div class="nebula nebula-1" id="nebula-1"></div>
+    <div class="nebula nebula-2" id="nebula-2"></div>
+    <div class="nebula nebula-3" id="nebula-3"></div>
+
+    <!-- Resplandor del amanecer / horizonte solar -->
+    <div class="dawn-horizon-glow" id="dawn-glow" aria-hidden="true"></div>
+
+    <!-- Luna llena con halo romántico (se oculta suavemente al llegar el día) -->
+    <div class="moon-wrapper" id="moon-wrapper" aria-hidden="true">
+      <div class="moon-haloOuter"></div>
+      <div class="moon-haloInner"></div>
+      <div class="moon">
+        <div class="moon-crater c1"></div>
+        <div class="moon-crater c2"></div>
+        <div class="moon-crater c3"></div>
+      </div>
+    </div>
+
+    <!-- Sol cálido que asciende a medida que avanza la canción -->
+    <div class="sun-wrapper" id="sun-wrapper" aria-hidden="true">
+      <div class="sun-rays"></div>
+      <div class="sun-haloOuter"></div>
+      <div class="sun-haloInner"></div>
+      <div class="sun-disc"></div>
+    </div>
+  </div>
+
+  <!-- Lienzo para partículas interactivas: estrellas, polen dorado, rayos de luz y pétalos flotantes -->
+  <canvas id="ambient-canvas" aria-hidden="true"></canvas>
+
+  <!-- Escenario de letras sincronizadas -->
+  <main id="experience-stage" class="experience-stage" aria-live="polite">
+    <!-- Indicador sutil del estado de floración y del ciclo del cielo -->
+    <header class="top-bar" id="top-bar">
+      <div class="song-badge">
+        <span class="pulse-dot" id="music-pulse"></span>
+        <span class="song-title" id="song-title-display">G-LOVE — Romeroflacko ft. El Mesías &amp; The B Brothers</span>
+      </div>
+      <div class="bloom-status" id="bloom-status-pill">
+        <span class="bloom-icon" id="sky-phase-icon">✿</span>
+        <span id="bloom-stage-text">Esperando el primer latido...</span>
+      </div>
+    </header>
+
+    <!-- Contenedor central de la letra sincronizada -->
+    <section class="lyrics-theater" id="lyrics-theater">
+      <div class="lyric-halo" id="lyric-halo"></div>
+      <p class="lyric-artist-tag" id="lyric-artist"></p>
+      <p class="lyric-prev" id="lyric-prev" aria-hidden="true"></p>
+      <div class="lyric-current-wrapper">
+        <h2 class="lyric-current" id="lyric-current">
+          <span class="lyric-placeholder">Presiona «Comenzar» para hacer florecer el jardín...</span>
+        </h2>
+      </div>
+      <p class="lyric-next" id="lyric-next" aria-hidden="true"></p>
+    </section>
+  </main>
+
+  <!-- Jardín de Lirios (generado con SVG + CSS animado procedimentalmente) -->
+  <div id="lily-garden-container" class="lily-garden-container" aria-label="Jardín de lirios floreciendo">
+    <!-- Bruma luminosa a ras del suelo -->
+    <div class="ground-mist mist-back" id="mist-back"></div>
+
+    <!-- SVG principal del jardín donde crecen los tallos, hojas, capullos y lirios -->
+    <svg id="garden-svg" class="garden-svg" viewBox="0 0 1440 680" preserveAspectRatio="xMidYMax slice">
+      <defs>
+        <!-- Degradados para los tallos y hojas -->
+        <linearGradient id="stemGrad" x1="0%" y1="100%" x2="0%" y2="0%">
+          <stop offset="0%" stop-color="#0b241c" />
+          <stop offset="45%" stop-color="#1f543d" />
+          <stop offset="100%" stop-color="#4e9a6f" />
+        </linearGradient>
+
+        <linearGradient id="leafGradLeft" x1="0%" y1="100%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#113326" />
+          <stop offset="60%" stop-color="#2c6e4f" />
+          <stop offset="100%" stop-color="#6cc08e" />
+        </linearGradient>
+
+        <linearGradient id="leafGradRight" x1="100%" y1="100%" x2="0%" y2="0%">
+          <stop offset="0%" stop-color="#0e2c20" />
+          <stop offset="60%" stop-color="#255f44" />
+          <stop offset="100%" stop-color="#5db380" />
+        </linearGradient>
+
+        <!-- Variante 1: Lirio Stargazer Rosa Imperial -->
+        <linearGradient id="petalPink" x1="50%" y1="100%" x2="50%" y2="0%">
+          <stop offset="0%" stop-color="#8b1e4b" />
+          <stop offset="35%" stop-color="#d4427e" />
+          <stop offset="75%" stop-color="#f99fc9" />
+          <stop offset="100%" stop-color="#fff0f7" />
+        </linearGradient>
+        <linearGradient id="petalPinkInner" x1="50%" y1="100%" x2="50%" y2="0%">
+          <stop offset="0%" stop-color="#6e1139" />
+          <stop offset="45%" stop-color="#c92e6d" />
+          <stop offset="85%" stop-color="#ffb8d9" />
+          <stop offset="100%" stop-color="#ffffff" />
+        </linearGradient>
+
+        <!-- Variante 2: Lirio Blanco Lunar con destello rosado -->
+        <linearGradient id="petalMoon" x1="50%" y1="100%" x2="50%" y2="0%">
+          <stop offset="0%" stop-color="#9e5a84" />
+          <stop offset="30%" stop-color="#e5b8d7" />
+          <stop offset="75%" stop-color="#fdf4fa" />
+          <stop offset="100%" stop-color="#ffffff" />
+        </linearGradient>
+        <linearGradient id="petalMoonInner" x1="50%" y1="100%" x2="50%" y2="0%">
+          <stop offset="0%" stop-color="#8a4470" />
+          <stop offset="40%" stop-color="#f2cce6" />
+          <stop offset="85%" stop-color="#ffffff" />
+          <stop offset="100%" stop-color="#ffffff" />
+        </linearGradient>
+
+        <!-- Variante 3: Lirio Coral / Atardecer -->
+        <linearGradient id="petalCoral" x1="50%" y1="100%" x2="50%" y2="0%">
+          <stop offset="0%" stop-color="#7c1d3f" />
+          <stop offset="38%" stop-color="#df5277" />
+          <stop offset="78%" stop-color="#ffc2b4" />
+          <stop offset="100%" stop-color="#fff8f5" />
+        </linearGradient>
+        <linearGradient id="petalCoralInner" x1="50%" y1="100%" x2="50%" y2="0%">
+          <stop offset="0%" stop-color="#61122f" />
+          <stop offset="45%" stop-color="#cf3d64" />
+          <stop offset="85%" stop-color="#ffd5cb" />
+          <stop offset="100%" stop-color="#ffffff" />
+        </linearGradient>
+
+        <!-- Variante 4: Lirio Amatista Romántico -->
+        <linearGradient id="petalAmethyst" x1="50%" y1="100%" x2="50%" y2="0%">
+          <stop offset="0%" stop-color="#511f66" />
+          <stop offset="40%" stop-color="#a855c9" />
+          <stop offset="80%" stop-color="#ecc5fb" />
+          <stop offset="100%" stop-color="#fdf7ff" />
+        </linearGradient>
+        <linearGradient id="petalAmethystInner" x1="50%" y1="100%" x2="50%" y2="0%">
+          <stop offset="0%" stop-color="#3d1252" />
+          <stop offset="45%" stop-color="#933eb6" />
+          <stop offset="85%" stop-color="#f3d8fe" />
+          <stop offset="100%" stop-color="#ffffff" />
+        </linearGradient>
+
+        <!-- Brillo central del cáliz y polen dorado -->
+        <radialGradient id="nectarGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#fff6b3" stop-opacity="0.95" />
+          <stop offset="45%" stop-color="#ff8ec6" stop-opacity="0.55" />
+          <stop offset="100%" stop-color="#ff8ec6" stop-opacity="0" />
+        </radialGradient>
+
+        <radialGradient id="antherGold" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#fff8c4" />
+          <stop offset="60%" stop-color="#f6b93b" />
+          <stop offset="100%" stop-color="#b86b11" />
+        </radialGradient>
+
+        <!-- Filtro de resplandor romántico suave -->
+        <filter id="lilyGlow" x="-35%" y="-35%" width="170%" height="170%">
+          <feGaussianBlur stdDeviation="6" result="blur" />
+          <feComposite in="SourceGraphic" in2="blur" operator="over" />
+        </filter>
+      </defs>
+
+      <!-- Colinas del jardín (se iluminan de verde esmeralda a medida que amanece) -->
+      <path class="hill hill-far" id="hill-far" d="M0,680 L0,565 Q340,515 740,555 T1440,535 L1440,680 Z" />
+      <path class="hill hill-mid" id="hill-mid" d="M0,680 L0,595 Q420,545 880,585 T1440,570 L1440,680 Z" />
+
+      <!-- Capa de hierba y follaje secundario de fondo -->
+      <g id="back-foliage-layer"></g>
+
+      <!-- Capa principal de lirios (generados en script.js con variaciones únicas) -->
+      <g id="lilies-layer"></g>
+
+      <!-- Capa de hierba y brotes en primer plano -->
+      <g id="front-foliage-layer"></g>
+
+      <!-- Suelo del jardín -->
+      <path class="hill hill-front" id="hill-front" d="M0,680 L0,635 Q360,610 720,632 T1440,622 L1440,680 Z" />
+    </svg>
+
+    <div class="ground-mist mist-front" id="mist-front"></div>
+  </div>
+
+  <!-- Reproductor oculto como icono en la esquina inferior izquierda (se despliega al tocarlo) -->
+  <footer class="player-dock" id="player-dock">
+    <!-- Botón icono fijo en la esquina inferior izquierda -->
+    <button
+      id="btn-toggle-dock"
+      class="dock-launcher-btn"
+      type="button"
+      title="Mostrar / ocultar barra de música"
+      aria-expanded="false"
+      aria-controls="dock-panel"
+    >
+      <span class="launcher-icon" id="launcher-icon">♫</span>
+      <span class="launcher-ring"></span>
+    </button>
+
+    <!-- Panel desplegable con la barra de adelantar música y controles -->
+    <div class="dock-panel" id="dock-panel">
+      <button id="btn-play-pause" class="dock-btn" type="button" title="Pausar / Reproducir" aria-label="Pausar o Reproducir">
+        <span id="play-icon">❚❚</span>
+      </button>
+
+      <div class="timeline-container">
+        <span class="time-label" id="time-current">0:00</span>
+        <div class="progress-track" id="progress-track" role="slider" aria-label="Adelantar o retroceder canción" tabindex="0">
+          <div class="progress-fill" id="progress-fill"></div>
+          <div class="progress-thumb" id="progress-thumb"></div>
+        </div>
+        <span class="time-label" id="time-total">4:24</span>
+      </div>
+
+      <div class="dock-actions">
+        <button id="btn-sync-minus" class="dock-btn dock-btn-sm" type="button" title="Adelantar letra (-0.3s)">-0.3s</button>
+        <button id="btn-sync-plus" class="dock-btn dock-btn-sm" type="button" title="Retrasar letra (+0.3s)">+0.3s</button>
+        <button id="btn-rebloom" class="dock-btn dock-btn-sm" type="button" title="Volver a animar el crecimiento de los lirios">✿ Florecer</button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Pantalla inicial elegante con botón "Comenzar" -->
+  <div id="intro-overlay" class="intro-overlay">
+    <div class="intro-card">
+      <!-- Emblema de lirio en capullo animado -->
+      <div class="intro-emblem" aria-hidden="true">
+        <svg viewBox="0 0 120 120" class="emblem-svg">
+          <circle cx="60" cy="60" r="46" class="emblem-ring" />
+          <path d="M60,95 C60,72 60,55 60,30" class="emblem-stem" />
+          <path d="M60,65 C42,58 34,42 46,26 C54,36 58,48 60,65 Z" class="emblem-petal-l" />
+          <path d="M60,65 C78,58 86,42 74,26 C66,36 62,48 60,65 Z" class="emblem-petal-r" />
+          <path d="M60,68 C48,46 52,26 60,16 C68,26 72,46 60,68 Z" class="emblem-petal-c" />
+          <circle cx="60" cy="24" r="2.5" class="emblem-star" />
+        </svg>
+      </div>
+
+      <p class="intro-subtitle">Una experiencia interactiva para ti</p>
+      <h1 class="intro-title">Donde Florecen los Lirios</h1>
+      <p class="intro-description">
+        Desde la noche estrellada hasta el amanecer, cada lirio crecerá lentamente desde la tierra y abrirá sus pétalos al compás de nuestra canción.
+      </p>
+
+      <div class="intro-song-detected">
+        <span class="detected-label">Canción lista en el jardín</span>
+        <strong class="detected-name" id="intro-song-name">Romeroflacko — G-LOVE ft. El Mesías &amp; The B Brothers</strong>
+      </div>
+
+      <button id="btn-start" class="btn-start" type="button">
+        <span class="btn-start-glow"></span>
+        <span class="btn-start-text">Comenzar</span>
+        <span class="btn-start-icon">✦</span>
+      </button>
+
+      <!-- Opción secundaria por si el usuario desea seleccionar manualmente otro archivo de audio -->
+      <div class="custom-audio-loader">
+        <label for="audio-file-input" class="custom-audio-label">
+          ¿Usar otro archivo MP3? <span>Seleccionar archivo</span>
+        </label>
+        <input type="file" id="audio-file-input" accept="audio/*" hidden />
+      </div>
+
+      <p class="intro-hint">Sube el volumen y toca cualquier parte del jardín para crear destellos de luz</p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
